@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Web.Data;
 using Web.Models;
 
 namespace Web.Controllers
@@ -13,9 +12,9 @@ namespace Web.Controllers
     [Route("api/Songs")]
     public class SongsController : Controller
     {
-        private readonly SongServiceContext _context;
+        private readonly SongContext _context;
 
-        public SongsController(SongServiceContext context)
+        public SongsController(SongContext context)
         {
             _context = context;
         }

@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Web.Data;
 using Web.Models;
 
 namespace Web.Controllers
@@ -13,9 +12,9 @@ namespace Web.Controllers
     [Route("api/Movies")]
     public class MoviesController : Controller
     {
-        private readonly MovieServiceContext _context;
+        private readonly MovieContext _context;
 
-        public MoviesController(MovieServiceContext context)
+        public MoviesController(MovieContext context)
         {
             _context = context;
         }
@@ -93,7 +92,7 @@ namespace Web.Controllers
             _context.Movies.Add(movie);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMovie", new { id = movie.Id }, movie);
+            return CreatedAtAction("GetMovie", new {id = movie.Id}, movie);
         }
 
         // DELETE: api/Movies/5
@@ -121,8 +120,5 @@ namespace Web.Controllers
         {
             return _context.Movies.Any(e => e.Id == id);
         }
-
-
-
     }
 }

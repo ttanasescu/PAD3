@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
-using Web.Models;
+using Web.Data;
 
 namespace Web
 {
@@ -27,12 +27,26 @@ namespace Web
         {
             // Add framework services.
             services.AddMvc();
+            const string connection = @"Data Source=.;Initial Catalog=pad3;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True";
 
-            services.AddDbContext<SongServiceContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("SongServiceContext")));
+            services.AddDbContext<MovieContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<SongContext>(options => options.UseSqlServer(connection));
 
-            services.AddDbContext<MovieServiceContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("MovieServiceContext")));
+
+            //services.AddDbContext<SongContext>(options =>
+            //{
+            //    var s = Configuration.GetConnectionString("SongServiceContext");
+            //    options.UseSqlServer(s);
+            //});
+
+            //services.AddDbContext<MovieContext>(options =>
+            //{
+            //    var connectionString = Configuration.GetConnectionString("MovieServiceContext");
+            //    options.UseSqlServer(connectionString);
+            //});
+
+            //const string connection = @"Data Source=.;Initial Catalog=pad3;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True";
+            //services.AddDbContext<MovieContext>(options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
