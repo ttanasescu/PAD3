@@ -1,6 +1,8 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Web.Data;
 
 namespace Web
@@ -20,16 +22,15 @@ namespace Web
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-                //try
-                //{
-                DbInitializer.Initialize(services.GetRequiredService<MovieContext>());
-                DbInitializer.Initialize(services.GetRequiredService<SongContext>());
-                //}
-                //catch (Exception ex)
-                //{
-                //    var logger = services.GetRequiredService<ILogger<Program>>();
-                //    logger.LogError(new EventId(1),ex,"An error occurred while seeding the database.");
-                //}
+                try
+                {
+                    DbInitializer.Initialize(services.GetRequiredService<DataContext>());
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(new EventId(1), ex, "An error occurred while seeding the database.");
+                }
             }
 
             host.Run();

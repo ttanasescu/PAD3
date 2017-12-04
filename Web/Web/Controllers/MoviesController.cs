@@ -8,13 +8,12 @@ using Web.Models;
 
 namespace Web.Controllers
 {
-    [Produces("application/json")]
     [Route("api/Movies")]
     public class MoviesController : Controller
     {
-        private readonly MovieContext _context;
+        private readonly DataContext _context;
 
-        public MoviesController(MovieContext context)
+        public MoviesController(DataContext context)
         {
             _context = context;
         }

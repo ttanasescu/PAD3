@@ -26,27 +26,13 @@ namespace Web
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc()
+                .AddXmlSerializerFormatters()
+                .AddXmlDataContractSerializerFormatters();
+            ;
             const string connection = @"Data Source=.;Initial Catalog=pad3;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True";
-
-            services.AddDbContext<MovieContext>(options => options.UseSqlServer(connection));
-            services.AddDbContext<SongContext>(options => options.UseSqlServer(connection));
-
-
-            //services.AddDbContext<SongContext>(options =>
-            //{
-            //    var s = Configuration.GetConnectionString("SongServiceContext");
-            //    options.UseSqlServer(s);
-            //});
-
-            //services.AddDbContext<MovieContext>(options =>
-            //{
-            //    var connectionString = Configuration.GetConnectionString("MovieServiceContext");
-            //    options.UseSqlServer(connectionString);
-            //});
-
-            //const string connection = @"Data Source=.;Initial Catalog=pad3;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True";
-            //services.AddDbContext<MovieContext>(options => options.UseSqlServer(connection));
+            
+            services.AddDbContext<DataContext>(options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
