@@ -19,3 +19,11 @@ D:\Clouds\Dropbox\Labs\S7\PAD\Web\Web\obj\Debug\netcoreapp1.1\Web.AssemblyInfoIn
 D:\Clouds\Dropbox\Labs\S7\PAD\Web\Web\obj\Debug\netcoreapp1.1\Web.AssemblyInfo.cs
 D:\Clouds\Dropbox\Labs\S7\PAD\Web\Web\obj\Debug\netcoreapp1.1\Web.dll
 D:\Clouds\Dropbox\Labs\S7\PAD\Web\Web\obj\Debug\netcoreapp1.1\Web.pdb
+D:\Uni\an IV sem I\PAD\PAD3\Web\Web\bin\Debug\netcoreapp1.1\Web.deps.json
+D:\Uni\an IV sem I\PAD\PAD3\Web\Web\bin\Debug\netcoreapp1.1\Web.runtimeconfig.json
+D:\Uni\an IV sem I\PAD\PAD3\Web\Web\bin\Debug\netcoreapp1.1\Web.runtimeconfig.dev.json
+D:\Uni\an IV sem I\PAD\PAD3\Web\Web\bin\Debug\netcoreapp1.1\Web.dll
+D:\Uni\an IV sem I\PAD\PAD3\Web\Web\bin\Debug\netcoreapp1.1\Web.pdb
+D:\Uni\an IV sem I\PAD\PAD3\Web\Web\obj\Debug\netcoreapp1.1\Web.AssemblyInfo.cs
+D:\Uni\an IV sem I\PAD\PAD3\Web\Web\obj\Debug\netcoreapp1.1\Web.dll
+D:\Uni\an IV sem I\PAD\PAD3\Web\Web\obj\Debug\netcoreapp1.1\Web.pdb

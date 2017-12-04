@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using Web.Models;
 
 namespace Web
 {
@@ -25,6 +27,12 @@ namespace Web
         {
             // Add framework services.
             services.AddMvc();
+
+            services.AddDbContext<SongServiceContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("SongServiceContext")));
+
+            services.AddDbContext<MovieServiceContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("MovieServiceContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
