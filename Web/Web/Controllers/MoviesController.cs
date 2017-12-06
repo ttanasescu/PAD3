@@ -63,7 +63,7 @@ namespace Web.Controllers
             return Ok(movie);
         }
 
-        // PUT: api/Movies/5
+        // POST: api/Movies
         [HttpPost]
         public async Task<IActionResult> PostMovie([FromBody] Movie movie)
         {
@@ -78,6 +78,7 @@ namespace Web.Controllers
             return CreatedAtAction("GetMovie", new { id = movie.Id }, movie);
         }
 
+        // PUT: api/Movies/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMovie([FromRoute] int id, [FromBody] Movie movie)
         {
@@ -111,9 +112,7 @@ namespace Web.Controllers
 
             return NoContent();
         }
-
-        // POST: api/Movies
-
+        
         // DELETE: api/Movies/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMovie([FromRoute] int id)
@@ -137,7 +136,7 @@ namespace Web.Controllers
 
         // PATCH: api/Songs/5
         [HttpPatch("{id}")]
-        public async Task<IActionResult> PatchSong([FromRoute] int id, [FromBody]JsonPatchDocument<Movie> patch)
+        public async Task<IActionResult> PatchMovie([FromRoute] int id, [FromBody]JsonPatchDocument<Movie> patch)
         {
             var movie = await _context.Movies.SingleOrDefaultAsync(m => m.Id == id);
 

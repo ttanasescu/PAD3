@@ -12,7 +12,7 @@ namespace Web.Models
         [Required]
         public string Title { get; set; }
 
-        [Required]
+        [Range(1, int.MaxValue)]
         public int Year { get; set; }
 
         [Required]
