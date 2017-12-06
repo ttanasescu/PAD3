@@ -30,7 +30,8 @@ namespace Web
                 .AddXmlSerializerFormatters()
                 .AddXmlDataContractSerializerFormatters();
             ;
-            const string connection = @"Data Source=.;Initial Catalog=pad3;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True";
+
+            var connection = Configuration.GetConnectionString("AzureDB");
             
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connection));
         }

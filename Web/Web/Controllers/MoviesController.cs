@@ -21,8 +21,12 @@ namespace Web.Controllers
 
         // GET: api/Movies
         [HttpGet]
-        public IEnumerable<Movie> GetMovie()
+        public IEnumerable<Movie> GetMovie([FromQuery]PagingQuery query)
         {
+            if (ModelState.IsValid)
+            {
+                return _context.Movies.Skip((query.Page - 1) * query.Size).Take(query.Size);
+            }
             return _context.Movies;
         }
 

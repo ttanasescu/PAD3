@@ -21,8 +21,12 @@ namespace Web.Controllers
 
         // GET: api/Songs
         [HttpGet]
-        public IEnumerable<Song> GetSong()
+        public IEnumerable<Song> GetSong([FromQuery]PagingQuery query)
         {
+            if (ModelState.IsValid)
+            {
+                return _context.Songs.Skip((query.Page-1)*query.Size).Take(query.Size);
+            }
             return _context.Songs;
         }
 
