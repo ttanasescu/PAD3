@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web.Data;
+using Web.Helpers;
 using Web.Models;
 
 namespace Web.Controllers
@@ -21,13 +22,21 @@ namespace Web.Controllers
 
         // GET: api/Songs
         [HttpGet]
-        public IEnumerable<Song> GetSong([FromQuery]PagingQuery query)
+        public IEnumerable<Song> GetSong([FromQuery]SongFilter filter)
         {
-            if (ModelState.IsValid)
+            IEnumerable<Song> songs = _context.Songs;
+
+            if (filter.Rating != null)
             {
-                return _context.Songs.Skip((query.Page-1)*query.Size).Take(query.Size);
+                songs = songs.Where(song => song.Rating == filter.Rating);
             }
-            return _context.Songs;
+
+            if (filter.Size != null)
+            {
+                return songs.Skip((filter.Page - 1) * filter.Size.Value).Take(filter.Size.Value);
+            }
+
+            return songs;
         }
 
         // GET: api/Songs/5
@@ -127,12 +136,12 @@ namespace Web.Controllers
             var song = await _context.Songs.SingleOrDefaultAsync(m => m.Id == id);
 
             patch.ApplyTo(song, ModelState);
-            
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            
+
             _context.Entry(song).State = EntityState.Modified;
 
             try

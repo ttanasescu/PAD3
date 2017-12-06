@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web.Data;
+using Web.Helpers;
 using Web.Models;
 
 namespace Web.Controllers
@@ -21,13 +22,26 @@ namespace Web.Controllers
 
         // GET: api/Movies
         [HttpGet]
-        public IEnumerable<Movie> GetMovie([FromQuery]PagingQuery query)
+        public IEnumerable<Movie> GetMovie([FromQuery]MovieFilter filter)
         {
-            if (ModelState.IsValid)
+            IEnumerable<Movie> movies = _context.Movies;
+            if (filter.Year != null)
             {
-                return _context.Movies.Skip((query.Page - 1) * query.Size).Take(query.Size);
+                movies = movies.Where(movie => movie.Year == filter.Year);
             }
-            return _context.Movies;
+            if (filter.Genre != null)
+            {
+                movies = movies.Where(movie => movie.Genre.Contains(filter.Genre));
+            }
+            if (filter.Producer != null)
+            {
+                movies = movies.Where(movie => movie.Producer == filter.Producer);
+            }
+            if (filter.Size.HasValue)
+            {
+                movies = movies.Skip((filter.Page - 1) * filter.Size.Value).Take(filter.Size.Value);
+            }
+            return movies;
         }
 
         // GET: api/Movies/5
@@ -61,7 +75,7 @@ namespace Web.Controllers
             _context.Movies.Add(movie);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMovie", new {id = movie.Id}, movie);
+            return CreatedAtAction("GetMovie", new { id = movie.Id }, movie);
         }
 
         [HttpPut("{id}")]
