@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web.Data;
@@ -45,6 +46,20 @@ namespace Web.Controllers
         }
 
         // PUT: api/Movies/5
+        [HttpPost]
+        public async Task<IActionResult> PostMovie([FromBody] Movie movie)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _context.Movies.Add(movie);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetMovie", new {id = movie.Id}, movie);
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMovie([FromRoute] int id, [FromBody] Movie movie)
         {
@@ -80,19 +95,6 @@ namespace Web.Controllers
         }
 
         // POST: api/Movies
-        [HttpPost]
-        public async Task<IActionResult> PostMovie([FromBody] Movie movie)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _context.Movies.Add(movie);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetMovie", new {id = movie.Id}, movie);
-        }
 
         // DELETE: api/Movies/5
         [HttpDelete("{id}")]
@@ -113,6 +115,40 @@ namespace Web.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(movie);
+        }
+
+        // PATCH: api/Songs/5
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchSong([FromRoute] int id, [FromBody]JsonPatchDocument<Movie> patch)
+        {
+            var movie = await _context.Movies.SingleOrDefaultAsync(m => m.Id == id);
+
+            patch.ApplyTo(movie, ModelState);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _context.Entry(movie).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MovieExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
         private bool MovieExists(int id)

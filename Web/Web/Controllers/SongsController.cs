@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web.Data;
@@ -113,6 +114,40 @@ namespace Web.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(song);
+        }
+
+        // PATCH: api/Songs/5
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchSong([FromRoute] int id, [FromBody]JsonPatchDocument<Song> patch)
+        {
+            var song = await _context.Songs.SingleOrDefaultAsync(m => m.Id == id);
+
+            patch.ApplyTo(song, ModelState);
+            
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            
+            _context.Entry(song).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!SongExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
         private bool SongExists(int id)

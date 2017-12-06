@@ -11,19 +11,30 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/values",
+      "launchUrl": "api/Movies",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
-    },
-    "Web": {
-      "commandName": "Project",
+    }
+    ,
+    "Songs": {
+      "commandName": "Web",
       "launchBrowser": true,
-      "launchUrl": "api/values",
+      "launchUrl": "api/Songs",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "http://localhost:13131/"
     }
+    //,
+    //"Movies": {
+    //  "commandName": "Web",
+    //  "launchBrowser": true,
+    //  "launchUrl": "api/Movies",
+    //  "environmentVariables": {
+    //    "ASPNETCORE_ENVIRONMENT": "Development"
+    //  },
+    //  "applicationUrl": "http://localhost:13132/"
+    //}
   }
 }
