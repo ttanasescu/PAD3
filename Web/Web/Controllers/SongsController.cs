@@ -24,7 +24,7 @@ namespace Web.Controllers
         [HttpGet]
         public IEnumerable<Song> GetSong([FromQuery]SongFilter filter)
         {
-            IEnumerable<Song> songs = _context.Songs;
+            var songs = _context.Songs.Select(song => song);
 
             if (filter.Rating != null)
             {
@@ -33,7 +33,7 @@ namespace Web.Controllers
 
             if (filter.Size != null)
             {
-                return songs.Skip((filter.Page - 1) * filter.Size.Value).Take(filter.Size.Value);
+                songs = songs.Skip((filter.Page - 1) * filter.Size.Value).Take(filter.Size.Value);
             }
 
             return songs;

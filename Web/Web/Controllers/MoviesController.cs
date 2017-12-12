@@ -24,7 +24,7 @@ namespace Web.Controllers
         [HttpGet]
         public IEnumerable<Movie> GetMovie([FromQuery]MovieFilter filter)
         {
-            IEnumerable<Movie> movies = _context.Movies;
+            var movies = _context.Movies.Select(movie => movie);
             if (filter.Year != null)
             {
                 movies = movies.Where(movie => movie.Year == filter.Year);
@@ -59,7 +59,7 @@ namespace Web.Controllers
             {
                 return NotFound();
             }
-
+            
             return Ok(movie);
         }
 
