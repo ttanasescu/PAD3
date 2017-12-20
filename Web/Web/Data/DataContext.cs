@@ -10,8 +10,12 @@ namespace Web.Data
         {
         }
 
-        public DbSet<Song> Songs { get; set; }
-        public DbSet<Movie> Movies { get; set; }
+        protected DataContext()
+        {
+        }
+
+        public virtual DbSet<Song> Songs { get; set; }
+        public virtual DbSet<Movie> Movies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
